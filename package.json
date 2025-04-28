@@ -1,6 +1,6 @@
 {
   "name": "@codingapi/form-mobile",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A UI Framework built with React and TypeScript",
   "keywords": [
     "ui",
@@ -35,7 +35,8 @@
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-
+    "@codingapi/ui-framework": "^0.0.12",
+    "antd-mobile": "^5.39.0"
   },
   "scripts": {
     "clean": "rm -rf dist",
