@@ -222,6 +222,12 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'select',
+                props: props
+            }
+        );
         setPaths([]);
         reloadOptions();
     }, []);

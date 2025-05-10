@@ -38,6 +38,12 @@ export const FormCascader: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'cascader',
+                props: props
+            }
+        );
         reloadOptions();
     }, []);
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormInstance, FormItemProps} from "@codingapi/ui-framework";
 import {Form, Input} from "antd-mobile";
 import {EyeInvisibleOutline, EyeOutline} from "antd-mobile-icons";
@@ -39,6 +39,15 @@ export const FormPassword: React.FC<FormItemProps> = (props) => {
     const [visible, setVisible] = React.useState(false);
 
     const {formContext, rules} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'password',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item

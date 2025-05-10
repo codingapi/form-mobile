@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Input} from "antd-mobile";
 import {formFieldInit} from "./common";
@@ -8,6 +8,15 @@ export const FormInput: React.FC<FormItemProps> = (props) => {
 
     const inputType = props.inputType || "text";
     const {formContext, rules} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'input',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {DatePicker, Form} from "antd-mobile";
 import {RightOutline} from "antd-mobile-icons";
@@ -32,6 +32,15 @@ export const FormDate: React.FC<FormItemProps> = (props) => {
     const format = props.dateFormat || 'YYYY-MM-DD';
     const precision = props.datePrecision || "day";
     const [visible, setVisible] = React.useState(false);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'date',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item

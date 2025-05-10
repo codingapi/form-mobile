@@ -36,6 +36,12 @@ export const FormSelector: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'selector',
+                props: props
+            }
+        );
         reloadOptions();
     }, []);
 

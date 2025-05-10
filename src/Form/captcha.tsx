@@ -18,6 +18,12 @@ export const FormCaptcha: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'captcha',
+                props: props
+            }
+        );
         reloadCaptcha();
     }, [])
 

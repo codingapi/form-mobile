@@ -151,6 +151,15 @@ const Uploader: React.FC<UploaderProps> = (props) => {
 export const FormUploader: React.FC<FormItemProps> = (props) => {
     const {formContext, rules} = formFieldInit(props);
 
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'uploader',
+                props: props
+            }
+        );
+    }, []);
+
     return (
         <Form.Item
             name={props.name}

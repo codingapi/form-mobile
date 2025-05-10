@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Switch as AntSwitch} from "antd-mobile";
 import {SwitchProps as AntdSwitchProps} from "antd-mobile/es/components/switch/switch";
@@ -18,6 +18,15 @@ const Switch: React.FC<SwitchProps> = ({value, ...props}) => {
 export const FormSwitch: React.FC<FormItemProps> = (props) => {
 
     const {formContext, rules} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'switch',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item
