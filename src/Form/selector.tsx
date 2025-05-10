@@ -68,9 +68,11 @@ export const FormSelector: React.FC<FormItemProps> = (props) => {
                 options={options || []}
                 value={props.value}
                 onChange={(e) => {
+                    // @ts-ignore
                     formContext?.setFieldValue(props.name, formToValue(e));
                     props.onChange && props.onChange(e, formContext);
                 }}
+                {...props.itemProps}
             />
         </Form.Item>
     )

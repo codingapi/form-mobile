@@ -92,6 +92,7 @@ export const FormCascader: React.FC<FormItemProps> = (props) => {
                     props.onChange && props.onChange(value, formContext);
                     setVisible(false);
                 }}
+                {...props.itemProps}
             >
                 {items => {
                     if (items.every(item => item === null)) {

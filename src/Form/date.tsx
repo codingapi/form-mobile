@@ -81,6 +81,7 @@ export const FormDate: React.FC<FormItemProps> = (props) => {
                     props.onChange && props.onChange(currentDate, formContext);
                     setVisible(false)
                 }}
+                {...props.itemProps}
             >
                 {value => {
                     if (value) {

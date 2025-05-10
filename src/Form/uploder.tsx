@@ -31,6 +31,7 @@ interface UploaderProps {
         name: string;
         url: string;
     }[]>;
+    itemProps?: any;
 }
 
 interface ImageUploadItem extends AntImageUploadItem{
@@ -143,6 +144,7 @@ const Uploader: React.FC<UploaderProps> = (props) => {
                         </div>
                     )
                 }}
+                {...props.itemProps}
             />
         </>
     )

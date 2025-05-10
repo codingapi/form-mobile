@@ -22,6 +22,7 @@ const PasswordItem:React.FC<PasswordItemProps> = (props)=>{
                     props.formInstance?.setFieldValue(props.name, value);
                     props.onChange && props.onChange(value, props.formInstance);
                 }}
+                {...props.itemProps}
             />
             <div className={"form-password-eye"}>
                 {!props.visible ? (

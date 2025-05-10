@@ -400,6 +400,7 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
                                 }
                             }}
                             multiple={props.selectMultiple}
+                            {...props.itemProps}
                         >
                             <CheckboxListView
                                 data={options && options

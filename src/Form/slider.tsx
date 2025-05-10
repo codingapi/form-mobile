@@ -39,6 +39,7 @@ export const FormSlider: React.FC<FormItemProps> = (props) => {
                     formContext?.setFieldValue(props.name, value);
                     props.onChange && props.onChange(value, formContext);
                 }}
+                {...props.itemProps}
             />
         </Form.Item>
     )
