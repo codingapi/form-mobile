@@ -6,16 +6,21 @@ import {formFieldInit} from "./common";
 import {Form} from "./index";
 import "./index.scss";
 
-const valueToForm = (value: string) => {
+const valueToForm = (value: string | string[]) => {
+    if (value instanceof Array) {
+        return value;
+    }
     if (value && value.length > 0) {
         return value.split(",");
     }
     return value;
 }
 
-const formToValue = (value: string[]) => {
-    if (value && value.length > 0) {
-        return value.join(",")
+const formToValue = (value: string[] | string) => {
+    if (value instanceof Array) {
+        if (value && value.length > 0) {
+            return value.join(",")
+        }
     }
     return value;
 }
