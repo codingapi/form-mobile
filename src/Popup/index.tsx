@@ -13,7 +13,7 @@ interface PopupProps {
     onCancel?: () => void;
 }
 
-const Popup: React.FC<PopupProps> = (props) => {
+export const Popup: React.FC<PopupProps> = (props) => {
 
     return (
         <AntPopup
@@ -51,5 +51,3 @@ const Popup: React.FC<PopupProps> = (props) => {
         </AntPopup>
     )
 }
-
-export default Popup;

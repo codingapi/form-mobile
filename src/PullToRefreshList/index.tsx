@@ -52,7 +52,7 @@ export interface PullToRefreshListProps {
     noDataStates?: React.ReactNode;
 }
 
-const PullToRefreshList: React.FC<PullToRefreshListProps> = (props) => {
+export const PullToRefreshList: React.FC<PullToRefreshListProps> = (props) => {
 
     const pageSize = props.pageSize || 10;
     const [orderList, setOrderList] = React.useState<any>([]);
@@ -192,4 +192,3 @@ const PullToRefreshList: React.FC<PullToRefreshListProps> = (props) => {
     )
 }
 
-export default PullToRefreshList;
