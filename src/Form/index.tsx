@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {Form as MobileForm} from "antd-mobile";
-import {FormFactory} from "./factory";
-import {AntdForm, AntdFormInstance, FormField, FormInstance} from "@codingapi/ui-framework";
+import {AntdForm, AntdFormInstance, FormField, FormInstance,FormFactory} from "@codingapi/ui-framework";
 import {FormContext} from "./context";
 import "./index.scss";
+import "./register";
 
 export interface FormProps {
     // 表单字段
@@ -59,7 +59,7 @@ const FormComponent: React.FC<FormProps> = (props) => {
                 footer={props.footer}
             >
                 {fields.length > 0 && fields.map((field) => {
-                    return FormFactory.create(field) as React.ReactNode;
+                    return FormFactory.getInstance().create(field) as React.ReactNode;
                 })}
 
                 {props.children}
