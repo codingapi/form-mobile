@@ -1,15 +1,9 @@
 import React, {useEffect} from "react";
 import {ErrorBlock, InfiniteScroll, PullToRefresh as AntPullToRefresh} from "antd-mobile";
 import {PullStatus} from "antd-mobile/es/components/pull-to-refresh";
+import {Response} from "@codingapi/ui-framework";
 import "./index.scss";
 
-export interface ListResponse {
-    data: {
-        total: number;
-        list: any[]
-    },
-    success: boolean
-}
 
 export interface ListAction {
     reload: () => void;
@@ -25,9 +19,9 @@ export interface PullToRefreshListProps {
     // 每页数量，默认为10
     pageSize?: number;
     // 刷新数据
-    onRefresh?: (pageSize: number) => Promise<ListResponse>;
+    onRefresh?: (pageSize: number) => Promise<Response>;
     // 加载更多
-    onLoadMore?: (pageSize: number, last: any) => Promise<ListResponse>;
+    onLoadMore?: (pageSize: number, last: any) => Promise<Response>;
     // 渲染列表项
     item: (item: any, index: number) => React.ReactNode;
     // 拉去数据提示
