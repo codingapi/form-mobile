@@ -1,3 +1,4 @@
+[![npm](https://img.shields.io/npm/v/@codingapi/form-mobile.svg)](https://www.npmjs.com/package/@codingapi/form-mobile)
 # Form Mobile
 
 基于Mobile的Form表单渲染引擎
