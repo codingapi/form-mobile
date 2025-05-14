@@ -1,133 +1,87 @@
 # Form Mobile
 
-[English](#english) | [中文](#chinese)
+基于Mobile的Form表单渲染引擎
 
-## English
-
-Form Mobile is a modern UI Framework built with React and TypeScript, designed to provide a seamless mobile form experience.
-
-### Features
-
-- 🚀 Built with React and TypeScript
-- 📱 Mobile-first design
-- 🎨 Customizable components
-- 🔧 Easy to integrate
-- 📦 Lightweight and efficient
-
-### Installation
-
-```bash
+## 安装
+```
 npm install @codingapi/form-mobile
-# or
+# 或者使用yarn
 yarn add @codingapi/form-mobile
 ```
 
-### Peer Dependencies
+## 使用
 
-This package requires React and ReactDOM as peer dependencies:
-
-```json
-{
-  "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  }
-}
+#### Form表单的渲染
 ```
+import React from "react";
+import {Form} from "@codingapi/form-mobile";
+import {FormField} from "@codingapi/ui-framework";
 
-### Usage
+const Test = () => {
 
-```tsx
-import { Form } from '@codingapi/form-mobile';
+    const fields = [
+        {
+            type: 'input',
+            props: {
+                required: true,
+                name: ['user', 'name'],
+                label: '姓名',
+                placeholder: '请输入姓名',
+                validateFunction: async (content) => {
+                    const value = content.value;
+                    if (value) {
+                        return []
+                    }
+                    return ['姓名不能为空']
+                }
+            }
+        }] as FormField[]
 
-function App() {
-  return (
-    <Form>
-      {/* Your form components */}
-    </Form>
-  );
+    return (
+        <>
+            <Form
+                layout={"vertical"}
+                onFinish={async (values) => {
+                    console.log(values);
+                }}
+                loadFields={async () => {
+                    return fields;
+                }}
+            >
+            </Form>
+        </>
+    )
 }
-```
 
-### Development
+export default Test;
+```
+更多示例请查看：https://github.com/codingapi/form-mobile/tree/main/playground
+
+
+## 主要特征
+
+- 支持对常用的Form表单的组件渲染
+- 即支持Meta数据渲染，也支持组件的渲染
+- 支持对form表单的控制能力
+- 支持表单字段的onChange、validate能力
+
+## 开发
 
 ```bash
 # Install dependencies
 yarn install
 
-# Build the package
+# Start development server
+yarn dev
+
+# Build for production
 yarn build
 
-# Publish to npm
-yarn push
+# Run tests
+yarn test
 ```
+## 许可
 
-### License
+Apache-2.0 © [CodingAPI](https://github.com/codingapi/form-mobile/blob/main/LICENSE)
 
-Apache-2.0
 
----
-
-## Chinese
-
-Form Mobile 是一个基于 React 和 TypeScript 构建的现代化 UI 框架，旨在提供流畅的移动端表单体验。
-
-### 特性
-
-- 🚀 基于 React 和 TypeScript 构建
-- 📱 移动优先设计
-- 🎨 可自定义组件
-- 🔧 易于集成
-- 📦 轻量高效
-
-### 安装
-
-```bash
-npm install @codingapi/form-mobile
-# 或
-yarn add @codingapi/form-mobile
-```
-
-### 依赖要求
-
-本包需要 React 和 ReactDOM 作为对等依赖：
-
-```json
-{
-  "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  }
-}
-```
-
-### 使用方法
-
-```tsx
-import { Form } from '@codingapi/form-mobile';
-
-function App() {
-  return (
-    <Form>
-      {/* 你的表单组件 */}
-    </Form>
-  );
-}
-```
-
-### 开发
-
-```bash
-# 安装依赖
-yarn install
-
-# 构建包
-yarn build
-
-# 发布到 npm
-yarn push
-```
-
-### 许可证
-
-Apache-2.0
