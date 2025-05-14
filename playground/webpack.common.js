@@ -20,6 +20,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
+            '@codingapi/form-mobile': path.resolve(__dirname, '../src'),
         },
     },
     module: {
