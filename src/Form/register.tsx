@@ -15,18 +15,20 @@ import {FormSelect} from "./select";
 import {FormSelector} from "./selector";
 import {FormUploader} from "./uploder";
 
-FormFactory.getInstance().addItem('input',FormInput);
-FormFactory.getInstance().addItem('password',FormPassword);
-FormFactory.getInstance().addItem('captcha',FormCaptcha);
-FormFactory.getInstance().addItem('checkbox',FormCheckbox);
-FormFactory.getInstance().addItem('radio',FormRadio);
-FormFactory.getInstance().addItem('rate',FormRate);
-FormFactory.getInstance().addItem('slider',FormSlider);
-FormFactory.getInstance().addItem('stepper',FormStepper);
-FormFactory.getInstance().addItem('textarea',FormTextArea);
-FormFactory.getInstance().addItem('switch',FormSwitch);
-FormFactory.getInstance().addItem('date',FormDate);
-FormFactory.getInstance().addItem('cascader',FormCascader);
-FormFactory.getInstance().addItem('select',FormSelect);
-FormFactory.getInstance().addItem('selector',FormSelector);
-FormFactory.getInstance().addItem('uploader',FormUploader);
+export const registerDefaultFormItems = () => {
+    FormFactory.getInstance().setItem('input',FormInput);
+    FormFactory.getInstance().setItem('password',FormPassword);
+    FormFactory.getInstance().setItem('captcha',FormCaptcha);
+    FormFactory.getInstance().setItem('checkbox',FormCheckbox);
+    FormFactory.getInstance().setItem('radio',FormRadio);
+    FormFactory.getInstance().setItem('rate',FormRate);
+    FormFactory.getInstance().setItem('slider',FormSlider);
+    FormFactory.getInstance().setItem('stepper',FormStepper);
+    FormFactory.getInstance().setItem('textarea',FormTextArea);
+    FormFactory.getInstance().setItem('switch',FormSwitch);
+    FormFactory.getInstance().setItem('date',FormDate);
+    FormFactory.getInstance().setItem('cascader',FormCascader);
+    FormFactory.getInstance().setItem('select',FormSelect);
+    FormFactory.getInstance().setItem('selector',FormSelector);
+    FormFactory.getInstance().setItem('uploader',FormUploader);
+}
