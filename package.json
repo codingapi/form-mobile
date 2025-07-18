@@ -1,6 +1,6 @@
 {
   "name": "@codingapi/form-mobile",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "A UI Framework built with React and TypeScript",
   "keywords": [
     "ui",
@@ -31,11 +31,11 @@
     "dist"
   ],
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "react": " ^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "dependencies": {
-    "@codingapi/ui-framework": "^0.0.43",
+    "@codingapi/ui-framework": "^0.0.44",
     "antd-mobile": "^5.39.0"
   },
   "scripts": {
@@ -82,7 +82,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.36.0",
-    "sass": "^1.87.0",
+    "sass": "^1.89.2",
     "ts-jest": "^29.3.2",
     "typescript": "^5.6.2"
   }
