@@ -19,3 +19,4 @@ export * from './Form/index';
 export * from './Descriptions';
 export * from './Popup';
 export * from './PullToRefreshList';
+export * from "./LazyComponent";
