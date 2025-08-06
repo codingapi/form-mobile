@@ -3,7 +3,6 @@ import {Form as MobileForm} from "antd-mobile";
 import {
     AntdForm,
     AntdFormInstance,
-    FormFactory,
     FormField,
     FormInstance,
     FormProps,
@@ -14,6 +13,8 @@ import {
 import {FormContext} from "./context";
 import "./index.scss";
 import {registerDefaultFormItems} from "./register";
+import {FormItem} from "./item";
+import FormDisplayRender from "./display";
 
 
 const FormComponent: React.FC<FormProps> = (props) => {
@@ -59,9 +60,15 @@ const FormComponent: React.FC<FormProps> = (props) => {
                     layout={props.layout}
                     footer={props.footer}
                 >
-                    {fields.length > 0 && fields.map((field) => {
-                        return FormFactory.getInstance().create(field) as React.ReactNode;
+                    {fields.length > 0 && !props.display && fields.map((field) => {
+                        return (
+                            <FormItem {...field}/>
+                        )
                     })}
+
+                    {fields.length> 0 && props.display && (
+                        <FormDisplayRender display={props.display} fields={fields} />
+                    )}
 
                     {props.children}
 
@@ -75,6 +82,7 @@ const FormComponent: React.FC<FormProps> = (props) => {
 type FormType = typeof FormComponent;
 type FormComponentType = FormType & {
     useForm: () => FormInstance;
+    Item: typeof MobileForm.Item;
 };
 
 export const Form = FormComponent as FormComponentType;
@@ -87,5 +95,7 @@ Form.useForm = () => {
     })
     return new FormInstance();
 };
+
+Form.Item = MobileForm.Item;
 
 

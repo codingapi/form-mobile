@@ -1,10 +1,9 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {DatePicker, Form} from "antd-mobile";
-import {RightOutline} from "antd-mobile-icons";
+import React, {useContext} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {DatePicker} from "antd-mobile";
 import dayjs from "dayjs";
-import {formFieldInit} from "./common";
 import "./index.scss";
+import {FormContext} from "./context";
 
 export const dateLabelRenderer = (type: string, data: number) => {
     switch (type) {
@@ -25,59 +24,30 @@ export const dateLabelRenderer = (type: string, data: number) => {
     }
 }
 
-export const FormDate: React.FC<FormItemProps> = (props) => {
+export const FormDate: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext, rules} = formFieldInit(props);
+    const formContext = useContext(FormContext) || undefined;
+    const value = props.value ? dayjs(props.value).toDate() : undefined;
 
     const format = props.dateFormat || 'YYYY-MM-DD';
     const precision = props.datePrecision || "day";
     const [visible, setVisible] = React.useState(false);
 
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'date',
-                props: props
-            }
-        );
-    }, []);
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-            extra={(
-                <RightOutline
-                    onClick={() => {
-                        setVisible(true);
-                    }}
-                />
-            )}
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: dayjs(value).toDate()
-                    }
-                }
-                return value;
-            }}
-        >
             <DatePicker
-                title={props.label}
-                value={props.value}
+                value={value}
                 visible={visible}
                 precision={precision}
                 renderLabel={dateLabelRenderer}
                 onClose={() => {
                     setVisible(false)
                 }}
+                onClick={()=>{
+                    setVisible(true)
+                }}
                 onConfirm={value => {
                     const currentDate = dayjs(value).format(format);
-                    formContext?.setFieldValue(props.name as string, currentDate);
                     props.onChange && props.onChange(currentDate, formContext);
                     setVisible(false)
                 }}
@@ -105,6 +75,5 @@ export const FormDate: React.FC<FormItemProps> = (props) => {
                     )
                 }}
             </DatePicker>
-        </Form.Item>
     )
 }

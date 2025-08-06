@@ -1,44 +1,25 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, TextArea} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {TextArea} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormTextArea: React.FC<FormItemProps> = (props) => {
+export const FormTextArea: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext, rules} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'textarea',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-        >
-            <TextArea
-                value={props.value}
-                showCount={true}
-                placeholder={props.placeholder}
-                maxLength={props.textAreaMaxLength}
-                rows={props.textAreaRows}
-                onChange={(value) => {
-                    formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <TextArea
+            value={props.value}
+            showCount={true}
+            placeholder={props.placeholder}
+            maxLength={props.textAreaMaxLength}
+            rows={props.textAreaRows}
+            onChange={(value) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

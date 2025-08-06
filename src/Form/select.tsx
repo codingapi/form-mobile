@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
-import {FormItemProps, FormOption} from "@codingapi/ui-framework";
-import {Button, CheckList, Form as AntdForm, InfiniteScroll, Popup, PullToRefresh, SearchBar} from "antd-mobile";
+import React, {useContext, useEffect} from "react";
+import {FormOption, FormTypeProps} from "@codingapi/ui-framework";
+import {Button, CheckList, InfiniteScroll, Popup, PullToRefresh, SearchBar} from "antd-mobile";
 import {RightOutline, SetOutline} from "antd-mobile-icons";
-import {formFieldInit} from "./common";
 import {Form} from "./index";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const valueToForm = (value: string | string[]) => {
     if (value instanceof Array) {
@@ -141,16 +141,14 @@ const CheckboxListView: React.FC<CheckboxListViewProps> = (props) => {
     )
 }
 
-export const FormSelect: React.FC<FormItemProps> = (props) => {
+export const FormSelect: React.FC<FormTypeProps> = (props) => {
 
     const [visible, setVisible] = React.useState(false);
     const [searchText, setSearchText] = React.useState('');
 
-    const {formContext, rules} = formFieldInit(props, () => {
-        reloadOptions();
-    });
+    const formContext = useContext(FormContext) || undefined;
 
-    const currentValue = valueToForm(formContext?.getFieldValue(props.name)) as string[] || valueToForm(props.value) as string[] || [];
+    const currentValue =   valueToForm(props.value) as string[] || [];
 
     const [selected, setSelected] = React.useState<string[]>(currentValue);
 
@@ -165,7 +163,7 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
     const [paths, setPaths] = React.useState<FormOption[]>([]);
 
     const CheckBoxValueText = () => {
-        const currentValue = valueToForm(formContext?.getFieldValue(props.name)) as string[] || valueToForm(props.value) as string[] || [];
+        const currentValue =  valueToForm(props.value) as string[] || [];
         const optionLabelFetch = (value: string) => {
             let label = value;
             let fetchState = false;
@@ -227,12 +225,6 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'select',
-                props: props
-            }
-        );
         setPaths([]);
         reloadOptions();
     }, []);
@@ -265,29 +257,7 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
     }
 
     return (
-        <AntdForm.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-            extra={(
-                <RightOutline
-                    onClick={() => {
-                        setVisible(true);
-                    }}
-                />
-            )}
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: valueToForm(value)
-                    }
-                }
-                return value
-            }}
-        >
+       <div>
             <CheckBoxValueText/>
 
             <Popup
@@ -314,8 +284,8 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
                             if (props.selectOptionFormEditable) {
                                 handlerOptionFormFinish();
                             } else {
-                                formContext?.setFieldValue(props.name, formToValue(selected));
-                                props.onChange && props.onChange(selected, formContext);
+                                const currentValue = formToValue(selected);
+                                props.onChange && props.onChange(currentValue, formContext);
                                 setVisible(false);
                             }
                         }}
@@ -398,7 +368,6 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
                                 setSelected(currentValue);
                                 // 单选时，选中即关闭弹框
                                 if (!props.selectMultiple) {
-                                    formContext?.setFieldValue(props.name, formToValue(currentValue));
                                     props.onChange && props.onChange(formToValue(currentValue), formContext);
 
                                     setVisible(false);
@@ -430,7 +399,7 @@ export const FormSelect: React.FC<FormItemProps> = (props) => {
                     )}
                 </div>
             </Popup>
-        </AntdForm.Item>
+        </div>
     )
 }
 

@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
-import {FormItemProps, FormInstance, NamePath} from "@codingapi/ui-framework";
-import {Form, Image, ImageUploader, ImageUploadItem as AntImageUploadItem, ImageViewer} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext, useEffect} from "react";
+import {FormInstance, FormTypeProps} from "@codingapi/ui-framework";
+import {Image, ImageUploader, ImageUploadItem as AntImageUploadItem, ImageViewer} from "antd-mobile";
 import {CloseCircleFill} from "antd-mobile-icons";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -15,7 +15,6 @@ const fileToBase64 = (file: File): Promise<string> => {
 }
 
 interface UploaderProps {
-    name: NamePath;
     formInstance?: FormInstance;
     uploaderAccept?: string;
     uploaderMaxCount?: number;
@@ -91,7 +90,6 @@ const Uploader: React.FC<UploaderProps> = (props) => {
 
         // 更新表单字段
         const currentValue = updatedFileList?.map((item: any) => item.id).join(",");
-        formInstance?.setFieldValue(props.name, currentValue);
         props.onChange && props.onChange(currentValue, formInstance);
     };
 
@@ -110,7 +108,6 @@ const Uploader: React.FC<UploaderProps> = (props) => {
                 value={fileList}
                 onChange={(fileList) => {
                     const currentValue = fileList?.map((item: any) => item.id).join(",");
-                    formInstance && formInstance?.setFieldValue(props.name, currentValue);
                     props.onChange && props.onChange(currentValue, formInstance);
                     setFileList(fileList);
                 }}
@@ -150,33 +147,16 @@ const Uploader: React.FC<UploaderProps> = (props) => {
     )
 }
 
-export const FormUploader: React.FC<FormItemProps> = (props) => {
-    const {formContext, rules} = formFieldInit(props);
+export const FormUploader: React.FC<FormTypeProps> = (props) => {
 
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'uploader',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-        >
-            <Uploader
-                value={props.value}
-                formInstance={formContext}
-                {...props}
-            />
-        </Form.Item>
+        <Uploader
+            value={props.value}
+            formInstance={formContext}
+            {...props}
+        />
     )
 }
 

@@ -1,41 +1,22 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Rate} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Rate} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormRate: React.FC<FormItemProps> = (props) => {
-    const {formContext, rules} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'rate',
-                props: props
-            }
-        );
-    }, []);
+export const FormRate: React.FC<FormTypeProps> = (props) => {
+    const formContext = useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-        >
-            <Rate
-                count={props.rateCount}
-                allowHalf={props.rateAllowHalf}
-                value={props.value}
-                onChange={(value) => {
-                    formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <Rate
+            count={props.rateCount}
+            allowHalf={props.rateAllowHalf}
+            value={props.value}
+            onChange={(value) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

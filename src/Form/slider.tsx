@@ -1,47 +1,28 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Slider} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Slider} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormSlider: React.FC<FormItemProps> = (props) => {
+export const FormSlider: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext, rules} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'slider',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-        >
-            <Slider
-                value={props.value}
-                max={props.sliderMaxNumber}
-                min={props.sliderMinNumber}
-                step={props.sliderStep}
-                range={props.sliderRange}
-                ticks={props.sliderTicks}
-                popover={props.sliderPopover}
-                marks={props.sliderMarks}
-                onChange={(value) => {
-                    formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <Slider
+            value={props.value}
+            max={props.sliderMaxNumber}
+            min={props.sliderMinNumber}
+            step={props.sliderStep}
+            range={props.sliderRange}
+            ticks={props.sliderTicks}
+            popover={props.sliderPopover}
+            marks={props.sliderMarks}
+            onChange={(value) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

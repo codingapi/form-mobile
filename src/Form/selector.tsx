@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Selector} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext, useEffect} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Selector} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const valueToForm = (value: string) => {
     if (value && value.length > 0) {
@@ -19,13 +19,12 @@ const formToValue = (value: string[]) => {
 }
 
 
-export const FormSelector: React.FC<FormItemProps> = (props) => {
+export const FormSelector: React.FC<FormTypeProps> = (props) => {
 
     const [options, setOptions] = React.useState(props.options);
 
-    const {formContext, rules} = formFieldInit(props, () => {
-        reloadOptions();
-    });
+    const formContext = useContext(FormContext) || undefined;
+    const value = props.value ? valueToForm(props.value) : undefined;
 
     const reloadOptions = () => {
         if (props.loadOptions) {
@@ -36,45 +35,21 @@ export const FormSelector: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'selector',
-                props: props
-            }
-        );
         reloadOptions();
     }, []);
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: valueToForm(value)
-                    }
-                }
-                return value
+        <Selector
+            multiple={props.selectorMultiple}
+            columns={props.selectorColumn}
+            options={options || []}
+            value={value}
+            onChange={(e) => {
+                const currentValue = formToValue(e as string[]);
+                props.onChange && props.onChange(currentValue, formContext);
             }}
-        >
-            <Selector
-                multiple={props.selectorMultiple}
-                columns={props.selectorColumn}
-                options={options || []}
-                value={props.value}
-                onChange={(e) => {
-                    // @ts-ignore
-                    formContext?.setFieldValue(props.name, formToValue(e));
-                    props.onChange && props.onChange(e, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+            {...props.itemProps}
+        />
     )
 }
 

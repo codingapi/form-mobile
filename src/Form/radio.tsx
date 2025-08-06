@@ -1,15 +1,13 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Radio, Space} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext, useEffect} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Radio, Space} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormRadio: React.FC<FormItemProps> = (props) => {
+export const FormRadio: React.FC<FormTypeProps> = (props) => {
     const [options, setOptions] = React.useState(props.options);
 
-    const {formContext, rules} = formFieldInit(props, () => {
-        reloadOptions();
-    });
+    const formContext = useContext(FormContext) || undefined;
 
     const reloadOptions = () => {
         if (props.loadOptions) {
@@ -20,44 +18,29 @@ export const FormRadio: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'radio',
-                props: props
-            }
-        );
         reloadOptions();
     }, []);
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
+
+        <Radio.Group
+            value={props.value}
+            onChange={(value) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            {...props.itemProps}
         >
-            <Radio.Group
-                value={props.value}
-                onChange={(value) => {
-                    formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                {...props.itemProps}
-            >
-                <Space direction={props.radioDirection}>
-                    {options?.map(item => {
-                        return (
-                            <Radio
-                                value={item.value}
-                                disabled={item.disable}
-                            >{item.label}</Radio>
-                        )
-                    })}
-                </Space>
-            </Radio.Group>
-        </Form.Item>
+            <Space direction={props.radioDirection}>
+                {options?.map(item => {
+                    return (
+                        <Radio
+                            value={item.value}
+                            disabled={item.disable}
+                        >{item.label}</Radio>
+                    )
+                })}
+            </Space>
+        </Radio.Group>
     )
 }
 

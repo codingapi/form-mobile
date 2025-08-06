@@ -1,43 +1,24 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Stepper} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Stepper} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormStepper: React.FC<FormItemProps> = (props) => {
+export const FormStepper: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext, rules} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'stepper',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-        >
-            <Stepper
-                value={props.value}
-                max={props.stepperMaxNumber}
-                min={props.stepperMinNumber}
-                digits={props.stepperDecimalLength}
-                onChange={(value) => {
-                    formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <Stepper
+            value={props.value}
+            max={props.stepperMaxNumber}
+            min={props.stepperMinNumber}
+            digits={props.stepperDecimalLength}
+            onChange={(value) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

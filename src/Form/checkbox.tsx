@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Checkbox, Form, Space} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext, useEffect} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Checkbox, Space} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const valueToForm = (value: string) => {
     if (value && value.length > 0) {
@@ -18,12 +18,10 @@ const formToValue = (value: string[]) => {
     return value;
 }
 
-export const FormCheckbox: React.FC<FormItemProps> = (props) => {
+export const FormCheckbox: React.FC<FormTypeProps> = (props) => {
     const [options, setOptions] = React.useState(props.options);
-
-    const {formContext, rules} = formFieldInit(props, () => {
-        reloadOptions();
-    });
+    const formContext = useContext(FormContext) || undefined;
+    const value = props.value ? valueToForm(props.value) : undefined;
 
     const reloadOptions = () => {
         if (props.loadOptions) {
@@ -34,37 +32,15 @@ export const FormCheckbox: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'checkbox',
-                props: props
-            }
-        );
         reloadOptions();
     }, []);
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: valueToForm(value)
-                    }
-                }
-                return value
-            }}
-        >
             <Checkbox.Group
-                value={props.value}
+                value={value}
                 onChange={(e) => {
-                    formContext?.setFieldValue(props.name, formToValue(e as string[]));
-                    props.onChange && props.onChange(e, formContext)
+                    const currentValue = formToValue(e as string[]);
+                    props.onChange && props.onChange(currentValue, formContext)
                 }}
                 {...props.itemProps}
             >
@@ -79,7 +55,6 @@ export const FormCheckbox: React.FC<FormItemProps> = (props) => {
                     })}
                 </Space>
             </Checkbox.Group>
-        </Form.Item>
     )
 }
 

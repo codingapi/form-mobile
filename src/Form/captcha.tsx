@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Input} from "antd-mobile";
-import {formFieldInit} from "./common";
+import React, {useContext, useState} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Input} from "antd-mobile";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormCaptcha: React.FC<FormItemProps> = (props) => {
+export const FormCaptcha: React.FC<FormTypeProps> = (props) => {
     const [captchaImg, setCaptchaImg] = useState<string>('');
-    const {formContext,rules} = formFieldInit(props);
+    const formContext = useContext(FormContext) || undefined;
 
     const reloadCaptcha = () => {
         props.onCaptchaRefresh && props.onCaptchaRefresh().then((res) => {
@@ -17,25 +17,16 @@ export const FormCaptcha: React.FC<FormItemProps> = (props) => {
         });
     }
 
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'captcha',
-                props: props
-            }
-        );
-        reloadCaptcha();
-    }, [])
-
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            rules={rules}
-            hidden={props.hidden}
-            help={props.help}
-            disabled={props.disabled}
-            extra={(
+            <div>
+                <Input
+                    value={props.value}
+                    placeholder={props.placeholder}
+                    onChange={(value) => {
+                        props.onChange && props.onChange(value,formContext);
+                    }}
+                    {...props.itemProps}
+                />
                 <img
                     onClick={() => {
                         reloadCaptcha();
@@ -46,17 +37,6 @@ export const FormCaptcha: React.FC<FormItemProps> = (props) => {
                     src={captchaImg}
                     alt="点击重置"
                 />
-            )}
-        >
-            <Input
-                value={props.value}
-                placeholder={props.placeholder}
-                onChange={(value) => {
-                    formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value,formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+            </div>
     )
 }
