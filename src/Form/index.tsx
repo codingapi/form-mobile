@@ -14,8 +14,6 @@ import {FormContext} from "./context";
 import "./index.scss";
 import {registerDefaultFormItems} from "./register";
 import {FormItem} from "./item";
-import FormDisplayRender from "./display";
-
 
 const FormComponent: React.FC<FormProps> = (props) => {
     registerDefaultFormItems();
@@ -60,15 +58,11 @@ const FormComponent: React.FC<FormProps> = (props) => {
                     layout={props.layout}
                     footer={props.footer}
                 >
-                    {fields.length > 0 && !props.display && fields.map((field) => {
+                    {fields.length > 0 && fields.map((field) => {
                         return (
                             <FormItem {...field}/>
                         )
                     })}
-
-                    {fields.length> 0 && props.display && (
-                        <FormDisplayRender display={props.display} fields={fields} />
-                    )}
 
                     {props.children}
 
