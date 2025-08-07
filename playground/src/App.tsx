@@ -1,24 +1,7 @@
 import React from "react";
 import {Button, Tabs, Toast} from "antd-mobile";
-import {
-    Form,
-    FormCaptcha,
-    FormCascader,
-    FormCheckbox,
-    FormDate,
-    FormInput,
-    FormPassword,
-    FormRadio,
-    FormRate,
-    FormSelect,
-    FormSlider,
-    FormStepper,
-    FormSwitch,
-    FormTextArea,
-    FormUploader
-} from "@codingapi/form-mobile";
+import {Form, FormItem} from "@codingapi/form-mobile";
 import {FormField, FormInstance} from "@codingapi/ui-framework";
-
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -404,220 +387,203 @@ const App = () => {
                             />
                         )}
                     >
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "name"]}
                             label={"姓名"}
+                            placeholder={"请输入姓名"}
+                            validateFunction={async (content) => {
+                                const value = content.value;
+                                if (value) {
+                                    return []
+                                }
+                                return ['姓名不能为空']
+                            }}
+                            type={'input'}
                         >
-                            <FormInput
-                                placeholder={"请输入姓名"}
-                                validateFunction={async (content) => {
-                                    const value = content.value;
-                                    if (value) {
-                                        return []
-                                    }
-                                    return ['姓名不能为空']
-                                }}
-                            />
-                        </Form.Item>
+                        </FormItem>
 
 
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "age"]}
                             label={"年龄"}
+                            placeholder={"请输入年龄"}
+                            type={'stepper'}
                         >
-                            <FormStepper
-                                placeholder={"请输入年龄"}
-                            />
-                        </Form.Item>
+                        </FormItem>
 
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "password"]}
                             label={"银行卡密码"}
+                            placeholder={"请输入银行卡密码"}
+                            validateFunction={async (content) => {
+                                const value = content.value;
+                                if (value) {
+                                    return []
+                                }
+                                return ['银行卡密码不能为空']
+                            }}
+                            type={'input'}
                         >
-                            <FormPassword
-                                placeholder={"请输入银行卡密码"}
-                                validateFunction={async (content) => {
-                                    const value = content.value;
-                                    if (value) {
-                                        return []
-                                    }
-                                    return ['银行卡密码不能为空']
-                                }}
-                            />
+                        </FormItem>
 
-                        </Form.Item>
-
-
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "code"]}
                             label={"银行卡验证码"}
+                            placeholder={"请输入银行卡验证码"}
+                            onCaptchaRefresh={async () => {
+                                console.log('refresh captcha')
+                                return {
+                                    url: '/captcha.jpeg',
+                                    code: '123'
+                                }
+                            }}
+                            type={'captcha'}
                         >
-                            <FormCaptcha
+                        </FormItem>
 
-                                placeholder={"请输入银行卡验证码"}
-                                onCaptchaRefresh={async () => {
-                                    console.log('refresh captcha')
-                                    return {
-                                        url: '/captcha.jpeg',
-                                        code: '123'
-                                    }
-                                }}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "checkbox"]}
                             label={"复选框"}
+                            options={[
+                                {label: '选项1', value: '1'},
+                                {label: '选项2', value: '2'},
+                                {label: '选项3', value: '3'},
+                            ]}
+                            type={'checkbox'}
                         >
-                            <FormCheckbox
-                                options={[
-                                    {label: '选项1', value: '1'},
-                                    {label: '选项2', value: '2'},
-                                    {label: '选项3', value: '3'},
-                                ]}
-                            />
-                        </Form.Item>
+                        </FormItem>
 
-
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "radio"]}
                             label={"单选框"}
+                            options={[
+                                {label: '选项1', value: '1'},
+                                {label: '选项2', value: '2'},
+                                {label: '选项3', value: '3'},
+                            ]}
+                            type={'radio'}
                         >
-                            <FormRadio
-                                options={[
-                                    {label: '选项1', value: '1'},
-                                    {label: '选项2', value: '2'},
-                                    {label: '选项3', value: '3'},
-                                ]}
-                            />
-                        </Form.Item>
+                        </FormItem>
 
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "rate"]}
                             label={"评分"}
+                            type={'rate'}
                         >
-                            <FormRate/>
-                        </Form.Item>
+                        </FormItem>
 
 
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "slider"]}
                             label={"滑块"}
+                            sliderPopover={true}
+                            type={'slider'}
                         >
-                            <FormSlider
-                                sliderPopover={true}
-                            />
-                        </Form.Item>
+                        </FormItem>
 
-
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "switch"]}
                             label={"开关"}
+                            type={'switch'}
                         >
-                            <FormSwitch/>
-                        </Form.Item>
+                        </FormItem>
 
 
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "textarea"]}
                             label={"文本域"}
+                            type={'textarea'}
                         >
-                            <FormTextArea/>
-                        </Form.Item>
+                        </FormItem>
 
 
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "date"]}
                             label={"日期"}
+                            type={'date'}
                         >
-                            <FormDate/>
-                        </Form.Item>
+                        </FormItem>
 
-
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "cascader"]}
                             label={"级联选择"}
+                            type={'cascader'}
+                            options={[
+                                {
+                                    label: '选项1',
+                                    value: '1',
+                                    children: [
+                                        {
+                                            label: '选项1-1',
+                                            value: '1-1',
+                                            children: [
+                                                {
+                                                    label: '选项1-1-1',
+                                                    value: '1-1-1',
+                                                },
+                                                {
+                                                    label: '选项1-1-2',
+                                                    value: '1-1-2',
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            label: '选项1-2',
+                                            value: '1-2',
+                                        },
+                                    ]
+                                },
+                                {
+                                    label: '选项2',
+                                    value: '2',
+                                    children: [
+                                        {
+                                            label: '选项2-1',
+                                            value: '2-1',
+                                        },
+                                        {
+                                            label: '选项2-2',
+                                            value: '2-2',
+                                        },
+                                    ]
+                                },
+                            ]}
                         >
-                            <FormCascader
-                                options={[
-                                    {
-                                        label: '选项1',
-                                        value: '1',
-                                        children: [
-                                            {
-                                                label: '选项1-1',
-                                                value: '1-1',
-                                                children: [
-                                                    {
-                                                        label: '选项1-1-1',
-                                                        value: '1-1-1',
-                                                    },
-                                                    {
-                                                        label: '选项1-1-2',
-                                                        value: '1-1-2',
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                label: '选项1-2',
-                                                value: '1-2',
-                                            },
-                                        ]
-                                    },
-                                    {
-                                        label: '选项2',
-                                        value: '2',
-                                        children: [
-                                            {
-                                                label: '选项2-1',
-                                                value: '2-1',
-                                            },
-                                            {
-                                                label: '选项2-2',
-                                                value: '2-2',
-                                            },
-                                        ]
-                                    },
-                                ]}
-                            />
-                        </Form.Item>
+                        </FormItem>
 
-
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "select"]}
                             label={"选择器"}
+                            type={'select'}
+                            selectMultiple={true}
+                            options={[
+                                {label: '选项1', value: '1'},
+                                {label: '选项2', value: '2'},
+                                {label: '选项3', value: '3'},
+                            ]}
                         >
-                            <FormSelect
-                                selectMultiple={true}
-                                options={[
-                                    {label: '选项1', value: '1'},
-                                    {label: '选项2', value: '2'},
-                                    {label: '选项3', value: '3'},
-                                ]}
-                            />
-                        </Form.Item>
+                        </FormItem>
 
-
-                        <Form.Item
+                        <FormItem
                             required={true}
                             name={["user", "avatar"]}
                             label={"头像"}
+                            type={'uploader'}
                         >
-                            <FormUploader/>
-                        </Form.Item>
+                        </FormItem>
                     </Form>
                 </>
             )}

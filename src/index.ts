@@ -16,6 +16,8 @@ export * from './Form/switch';
 export * from './Form/textarea';
 export * from './Form/uploder';
 export * from './Form/index';
+export * from './Form/item';
+export * from './Form/common';
 export * from './Descriptions';
 export * from './Popup';
 export * from './PullToRefreshList';

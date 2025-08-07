@@ -59,8 +59,12 @@ const FormComponent: React.FC<FormProps> = (props) => {
                     footer={props.footer}
                 >
                     {fields.length > 0 && fields.map((field) => {
+                        const itemRenderProps = {
+                            type: field.type,
+                            ...field.props,
+                        }
                         return (
-                            <FormItem {...field}/>
+                            <FormItem {...itemRenderProps}/>
                         )
                     })}
 
