@@ -2,9 +2,9 @@ import React, {useContext, useEffect} from "react";
 import {FormOption, FormTypeProps} from "@codingapi/ui-framework";
 import {Button, CheckList, InfiniteScroll, Popup, PullToRefresh, SearchBar} from "antd-mobile";
 import {RightOutline, SetOutline} from "antd-mobile-icons";
-import {Form} from "./index";
 import "./index.scss";
 import {FormContext} from "./context";
+import {Form} from "../Form";
 
 const valueToForm = (value: string | string[]) => {
     if (value instanceof Array) {
@@ -403,3 +403,4 @@ export const FormSelect: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormSelect.displayName = "select";

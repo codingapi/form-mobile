@@ -77,3 +77,5 @@ export const FormDate: React.FC<FormTypeProps> = (props) => {
             </DatePicker>
     )
 }
+
+FormContext.displayName = "date";

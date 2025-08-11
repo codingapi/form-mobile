@@ -44,3 +44,5 @@ export const FormRadio: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormRadio.displayName = "radio";
+

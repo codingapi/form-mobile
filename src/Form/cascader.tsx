@@ -91,3 +91,5 @@ export const FormCascader: React.FC<FormTypeProps> = (props) => {
         </Cascader>
     )
 }
+
+FormCascader.displayName = "cascader";

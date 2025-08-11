@@ -121,13 +121,17 @@ const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance})
                             name: ['user', 'name'],
                             label: '姓名',
                             placeholder: '请输入姓名',
-                            validateFunction: async (content) => {
-                                const value = content.value;
-                                if (value) {
-                                    return []
+                            rules: [
+                                {
+                                    required: true,
+                                    validator: async (rule, value) => {
+                                        if (!value) {
+                                            return Promise.reject('姓名不能为空');
+                                        }
+                                        return Promise.resolve();
+                                    }
                                 }
-                                return ['姓名不能为空']
-                            }
+                            ]
                         },
                         type: 'input'
                     }, 0);
@@ -138,7 +142,7 @@ const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance})
     )
 }
 
-const App = () => {
+const AppBck = () => {
 
     const [activeKey, setActiveKey] = React.useState("left");
 
@@ -153,13 +157,17 @@ const App = () => {
                 name: ['user', 'name'],
                 label: '姓名',
                 placeholder: '请输入姓名',
-                validateFunction: async (content) => {
-                    const value = content.value;
-                    if (value) {
-                        return []
+                rules: [
+                    {
+                        required: true,
+                        validator: async (rule, value) => {
+                            if (!value) {
+                                return Promise.reject('姓名不能为空');
+                            }
+                            return Promise.resolve();
+                        }
                     }
-                    return ['姓名不能为空']
-                }
+                ]
             }
         },
         {
@@ -178,13 +186,12 @@ const App = () => {
                 name: ['user', 'password'],
                 label: '银行卡密码',
                 placeholder: '请输入银行卡密码',
-                validateFunction: async (content) => {
-                    const value = content.value;
-                    if (value) {
-                        return []
+                rules: [
+                    {
+                        required: true,
+                        message: '银行卡密码不能为空'
                     }
-                    return ['银行卡密码不能为空']
-                }
+                ]
             }
         },
         {
@@ -392,13 +399,17 @@ const App = () => {
                             name={["user", "name"]}
                             label={"姓名"}
                             placeholder={"请输入姓名"}
-                            validateFunction={async (content) => {
-                                const value = content.value;
-                                if (value) {
-                                    return []
+                            rules={[
+                                {
+                                    required: true,
+                                    validator: async (rule, value) => {
+                                        if (!value) {
+                                            return Promise.reject('姓名不能为空');
+                                        }
+                                        return Promise.resolve();
+                                    }
                                 }
-                                return ['姓名不能为空']
-                            }}
+                            ]}
                             type={'input'}
                         >
                         </FormItem>
@@ -418,13 +429,12 @@ const App = () => {
                             name={["user", "password"]}
                             label={"银行卡密码"}
                             placeholder={"请输入银行卡密码"}
-                            validateFunction={async (content) => {
-                                const value = content.value;
-                                if (value) {
-                                    return []
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '银行卡密码不能为空'
                                 }
-                                return ['银行卡密码不能为空']
-                            }}
+                            ]}
                             type={'input'}
                         >
                         </FormItem>
@@ -591,4 +601,4 @@ const App = () => {
     )
 }
 
-export default App;
+export default AppBck;

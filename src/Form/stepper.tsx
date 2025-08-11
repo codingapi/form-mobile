@@ -22,3 +22,4 @@ export const FormStepper: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormStepper.displayName = "stepper";

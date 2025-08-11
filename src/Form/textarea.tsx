@@ -23,3 +23,4 @@ export const FormTextArea: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormTextArea.displayName = "textarea";

@@ -18,7 +18,7 @@ export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
         }
     }) as React.ReactNode;
 
-    const {formContext,rules} = formFieldInit(props);
+    const {formContext} = formFieldInit(props.name);
 
     useEffect(() => {
         formContext?.addFormField({
@@ -35,7 +35,7 @@ export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
             label={props.label}
             required={props.required}
             help={props.help}
-            rules={rules}
+            rules={props.rules}
             hidden={props.hidden}
         >
             {formItem}

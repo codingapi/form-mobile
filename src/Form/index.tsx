@@ -5,7 +5,7 @@ import {
     AntdFormInstance,
     FormField,
     FormInstance,
-    FormProps,
+    FormProps, FormRule, NamePath,
     ThemeConfig,
     ThemeProvider,
     ThemeProviderContext
@@ -14,6 +14,7 @@ import {FormContext} from "./context";
 import "./index.scss";
 import {registerDefaultFormItems} from "./register";
 import {FormItem} from "./item";
+import {formFieldInit} from "./common";
 
 const FormComponent: React.FC<FormProps> = (props) => {
     registerDefaultFormItems();
@@ -77,10 +78,53 @@ const FormComponent: React.FC<FormProps> = (props) => {
     )
 }
 
+interface $FormItemProps {
+    children: React.ReactNode;
+    name?: NamePath;
+    hidden?: boolean;
+    label?: React.ReactNode;
+    required?: boolean;
+    style?: React.CSSProperties;
+    rules?: FormRule[];
+}
+
+const $FormItem: React.FC<$FormItemProps> = (props) => {
+
+    const child = props.children;
+    if (React.isValidElement(child)) {
+        // @ts-ignore
+        const type = child.type.displayName;
+        const {formContext} = formFieldInit(props.name);
+
+        useEffect(() => {
+            formContext?.addFormField({
+                type: type,
+                props: {
+                    ...child.props,
+                    ...props,
+                }
+            })
+        }, []);
+    }
+
+    return (
+        <MobileForm.Item
+            name={props.name}
+            hidden={props.hidden}
+            label={props.label}
+            required={props.required}
+            style={props.style}
+            rules={props.rules}
+        >
+            {props.children}
+        </MobileForm.Item>
+    )
+}
+
 type FormType = typeof FormComponent;
 type FormComponentType = FormType & {
     useForm: () => FormInstance;
-    Item: typeof MobileForm.Item;
+    Item: typeof $FormItem;
 };
 
 export const Form = FormComponent as FormComponentType;
@@ -94,6 +138,6 @@ Form.useForm = () => {
     return new FormInstance();
 };
 
-Form.Item = MobileForm.Item;
+Form.Item = $FormItem;
 
 

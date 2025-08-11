@@ -18,6 +18,8 @@ export * from './Form/uploder';
 export * from './Form/index';
 export * from './Form/item';
 export * from './Form/common';
+export * from "./Form/register";
+export * from "./Form/context";
 export * from './Descriptions';
 export * from './Popup';
 export * from './PullToRefreshList';

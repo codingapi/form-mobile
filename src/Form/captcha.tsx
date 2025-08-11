@@ -18,7 +18,7 @@ export const FormCaptcha: React.FC<FormTypeProps> = (props) => {
     }
 
     return (
-            <div>
+            <div className={"form-captcha"}>
                 <Input
                     value={props.value}
                     placeholder={props.placeholder}
@@ -40,3 +40,5 @@ export const FormCaptcha: React.FC<FormTypeProps> = (props) => {
             </div>
     )
 }
+
+FormCaptcha.displayName = "captcha";

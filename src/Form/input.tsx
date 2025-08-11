@@ -24,3 +24,4 @@ export const FormInput: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormInput.displayName = "input";
