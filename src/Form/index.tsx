@@ -5,7 +5,10 @@ import {
     AntdFormInstance,
     FormField,
     FormInstance,
-    FormProps, FormRule, NamePath,
+    FormProps,
+    FormRule,
+    loadRules,
+    NamePath,
     ThemeConfig,
     ThemeProvider,
     ThemeProviderContext
@@ -90,6 +93,7 @@ interface $FormItemProps {
 
 const $FormItem: React.FC<$FormItemProps> = (props) => {
 
+    const rules = loadRules(props);
     const child = props.children;
     if (React.isValidElement(child)) {
         // @ts-ignore
@@ -114,7 +118,7 @@ const $FormItem: React.FC<$FormItemProps> = (props) => {
             label={props.label}
             required={props.required}
             style={props.style}
-            rules={props.rules}
+            rules={rules}
         >
             {props.children}
         </MobileForm.Item>

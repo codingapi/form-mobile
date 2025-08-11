@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {Form as AntForm} from "antd-mobile";
-import {FormFactory, FormField, FormItemProps} from "@codingapi/ui-framework";
+import {FormFactory, FormField, FormItemProps, loadRules} from "@codingapi/ui-framework";
 import {formFieldInit} from "./common";
 
 
@@ -11,6 +11,7 @@ interface FormItemRenderProps extends FormItemProps{
 
 export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
 
+    const rules = loadRules(props);
     const formItem =  FormFactory.getInstance().create({
         type: props.type,
         props: {
@@ -35,7 +36,7 @@ export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
             label={props.label}
             required={props.required}
             help={props.help}
-            rules={props.rules}
+            rules={rules}
             hidden={props.hidden}
         >
             {formItem}
