@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {FormTypeProps} from "@codingapi/ui-framework";
 import {Input} from "antd-mobile";
 import "./index.scss";
@@ -16,6 +16,11 @@ export const FormCaptcha: React.FC<FormTypeProps> = (props) => {
             }
         });
     }
+
+    useEffect(() => {
+        console.log('FormCaptcha useEffect', props.optionVersion);
+        reloadCaptcha();
+    }, [props.optionVersion]);
 
     return (
             <div className={"form-captcha"}>

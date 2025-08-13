@@ -95,10 +95,15 @@ const $FormItem: React.FC<$FormItemProps> = (props) => {
 
     const rules = loadRules(props);
     const child = props.children;
+    const {formContext,optionVersion} = formFieldInit(props.name);
+    const children = React.cloneElement(child as any,{
+        optionVersion: optionVersion
+    })
+
     if (React.isValidElement(child)) {
         // @ts-ignore
         const type = child.type.displayName;
-        const {formContext} = formFieldInit(props.name);
+
 
         useEffect(() => {
             formContext?.addFormField({
@@ -120,7 +125,7 @@ const $FormItem: React.FC<$FormItemProps> = (props) => {
             style={props.style}
             rules={rules}
         >
-            {props.children}
+            {children}
         </MobileForm.Item>
     )
 }

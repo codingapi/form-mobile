@@ -45,6 +45,13 @@ const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance})
                 }}
             >设置姓名</Button>
 
+
+            <Button
+                onClick={async () => {
+                    formInstance.reloadOptions(["user", "checkbox"])
+                }}
+            >刷新选项</Button>
+
             <Button
                 onClick={async () => {
                     const result = await formInstance.validate();
@@ -216,11 +223,14 @@ const AppBck = () => {
                 required: true,
                 name: ['user', 'checkbox'],
                 label: '复选框',
-                options: [
-                    {label: '选项1', value: '1'},
-                    {label: '选项2', value: '2'},
-                    {label: '选项3', value: '3'},
-                ]
+                loadOptions:async ()=>{
+                    console.log('loadOptions checkbox');
+                    return [
+                        {label: '选项1', value: '1'},
+                        {label: '选项2', value: '2'},
+                        {label: '选项3', value: '3'},
+                    ]
+                }
             }
         },
         {
@@ -459,12 +469,15 @@ const AppBck = () => {
                             required={true}
                             name={["user", "checkbox"]}
                             label={"复选框"}
-                            options={[
-                                {label: '选项1', value: '1'},
-                                {label: '选项2', value: '2'},
-                                {label: '选项3', value: '3'},
-                            ]}
                             type={'checkbox'}
+                            loadOptions={async ()=>{
+                                console.log('loadOptions checkbox');
+                                return [
+                                    {label: '选项1', value: '1'},
+                                    {label: '选项2', value: '2'},
+                                    {label: '选项3', value: '3'},
+                                ]
+                            }}
                         >
                         </FormItem>
 

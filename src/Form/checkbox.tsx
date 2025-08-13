@@ -33,7 +33,7 @@ export const FormCheckbox: React.FC<FormTypeProps> = (props) => {
 
     useEffect(() => {
         reloadOptions();
-    }, []);
+    }, [props.optionVersion]);
 
     return (
             <Checkbox.Group

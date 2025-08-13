@@ -227,7 +227,7 @@ export const FormSelect: React.FC<FormTypeProps> = (props) => {
     useEffect(() => {
         setPaths([]);
         reloadOptions();
-    }, []);
+    }, [props.optionVersion]);
 
 
     useEffect(() => {

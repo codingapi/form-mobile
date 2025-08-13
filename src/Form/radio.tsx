@@ -19,7 +19,7 @@ export const FormRadio: React.FC<FormTypeProps> = (props) => {
 
     useEffect(() => {
         reloadOptions();
-    }, []);
+    }, [props.optionVersion]);
 
     return (
 
